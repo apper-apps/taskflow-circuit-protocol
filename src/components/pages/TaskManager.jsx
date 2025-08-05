@@ -155,23 +155,7 @@ const TaskManager = () => {
       console.error("Error updating task:", err);
     }
   };
-
-  const handleDeleteTask = async (taskId) => {
-    if (!window.confirm("Are you sure you want to delete this task?")) {
-      return;
-    }
-
-    try {
-      await taskService.delete(taskId);
-      setTasks(prev => prev.filter(t => t.Id !== taskId));
-      toast.success("Task deleted successfully");
-} catch (err) {
-      toast.error("Failed to delete task");
-      console.error("Error deleting task:", err);
-    }
-};
-
-  const handleDeleteTask = async (taskId) => {
+const handleDeleteTask = async (taskId) => {
     if (!window.confirm("Are you sure you want to delete this task?")) {
       return;
     }
@@ -185,7 +169,6 @@ const TaskManager = () => {
       console.error("Error deleting task:", err);
     }
   };
-
   const handleReorderTasks = async (taskIds) => {
     try {
       // Update local state immediately for smooth UX

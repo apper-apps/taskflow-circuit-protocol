@@ -31,25 +31,8 @@ const TaskList = ({
   onRetry,
   className 
 }) => {
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <Error message={error} onRetry={onRetry} />;
-  }
-
-  if (!tasks || tasks.length === 0) {
-    return <Empty 
-      title="No tasks found"
-      description="Get started by creating your first task or adjust your filters to see more results."
-    />;
-  }
-
-  const getCategoryForTask = (task) => {
-    return categories?.find(cat => cat.Id === task.categoryId);
-  };
-const sensors = useSensors(
+  // React hooks must be called before any early returns
+  const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
@@ -69,6 +52,26 @@ const sensors = useSensors(
       onReorderTasks?.(taskIds);
     }
   };
+
+  const getCategoryForTask = (task) => {
+    return categories?.find(cat => cat.Id === task.categoryId);
+  };
+
+  // Early returns after hooks
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error message={error} onRetry={onRetry} />;
+  }
+
+  if (!tasks || tasks.length === 0) {
+    return <Empty 
+      title="No tasks found"
+      description="Get started by creating your first task or adjust your filters to see more results."
+    />;
+  }
 
   return (
     <div className={`space-y-4 ${className}`}>
