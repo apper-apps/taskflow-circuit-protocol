@@ -1,0 +1,112 @@
+[
+  {
+    "Id": 1,
+    "title": "Complete project proposal",
+    "description": "Finalize the Q4 project proposal and send it to stakeholders for review",
+    "categoryId": 1,
+    "priority": "high",
+    "dueDate": "2024-01-20T09:00:00.000Z",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-01-15T08:30:00.000Z"
+  },
+  {
+    "Id": 2,
+    "title": "Review team performance metrics",
+    "description": "Analyze team productivity data and prepare feedback for quarterly review",
+    "categoryId": 1,
+    "priority": "medium",
+    "dueDate": "2024-01-18T14:00:00.000Z",
+    "completed": true,
+    "completedAt": "2024-01-17T13:45:00.000Z",
+    "createdAt": "2024-01-10T09:15:00.000Z"
+  },
+  {
+    "Id": 3,
+    "title": "Grocery shopping",
+    "description": "Buy ingredients for weekly meal prep: chicken, vegetables, rice, and fruits",
+    "categoryId": 2,
+    "priority": "medium",
+    "dueDate": "2024-01-19T18:00:00.000Z",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-01-16T07:00:00.000Z"
+  },
+  {
+    "Id": 4,
+    "title": "Call dentist for appointment",
+    "description": "Schedule routine cleaning and checkup for next month",
+    "categoryId": 3,
+    "priority": "low",
+    "dueDate": "2024-01-22T10:00:00.000Z",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-01-14T11:20:00.000Z"
+  },
+  {
+    "Id": 5,
+    "title": "Learn React hooks advanced patterns",
+    "description": "Complete online course on advanced React hooks and practice with sample projects",
+    "categoryId": 4,
+    "priority": "medium",
+    "dueDate": "2024-01-25T20:00:00.000Z",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-01-12T19:30:00.000Z"
+  },
+  {
+    "Id": 6,
+    "title": "Update portfolio website",
+    "description": "Add recent projects and refresh the design to showcase new skills",
+    "categoryId": 4,
+    "priority": "high",
+    "dueDate": "2024-01-21T23:59:00.000Z",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-01-13T16:45:00.000Z"
+  },
+  {
+    "Id": 7,
+    "title": "Organize home office",
+    "description": "Declutter desk, organize cables, and set up better lighting for productivity",
+    "categoryId": 2,
+    "priority": "low",
+    "dueDate": "2024-01-23T15:00:00.000Z",
+    "completed": true,
+    "completedAt": "2024-01-16T14:30:00.000Z",
+    "createdAt": "2024-01-11T10:00:00.000Z"
+  },
+  {
+    "Id": 8,
+    "title": "Prepare presentation for client meeting",
+    "description": "Create slides and demo materials for the upcoming client presentation on Thursday",
+    "categoryId": 1,
+    "priority": "high",
+    "dueDate": "2024-01-24T09:00:00.000Z",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-01-17T08:00:00.000Z"
+  },
+  {
+    "Id": 9,
+    "title": "Annual health checkup",
+    "description": "Schedule and complete annual physical examination with primary care doctor",
+    "categoryId": 3,
+    "priority": "medium",
+    "dueDate": "2024-01-30T11:00:00.000Z",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-01-08T12:15:00.000Z"
+  },
+  {
+    "Id": 10,
+    "title": "Plan weekend hiking trip",
+    "description": "Research trails, check weather, and pack gear for Saturday hiking adventure",
+    "categoryId": 2,
+    "priority": "low",
+    "dueDate": "2024-01-26T08:00:00.000Z",
+    "completed": false,
+    "completedAt": null,
+    "createdAt": "2024-01-15T20:00:00.000Z"
+  }
+]
