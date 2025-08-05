@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
-import { format, isToday, isPast } from "date-fns";
-import { cn } from "@/utils/cn";
-import Checkbox from "@/components/atoms/Checkbox";
-import Button from "@/components/atoms/Button";
+import { format, isPast, isToday } from "date-fns";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import React from "react";
+import ApperIcon from "@/components/ApperIcon";
 import PriorityIndicator from "@/components/molecules/PriorityIndicator";
 import CategoryBadge from "@/components/molecules/CategoryBadge";
-import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Checkbox from "@/components/atoms/Checkbox";
+import { cn } from "@/utils/cn";
 
 const TaskCard = ({ 
   task, 
@@ -13,8 +16,17 @@ const TaskCard = ({
   onToggleComplete, 
   onEdit, 
   onDelete,
-  className 
+  className
 }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: task.Id });
+
   const isOverdue = task.dueDate && isPast(new Date(task.dueDate)) && !task.completed;
   const isDueToday = task.dueDate && isToday(new Date(task.dueDate));
 
@@ -30,20 +42,38 @@ const TaskCard = ({
     onDelete && onDelete(task.Id);
   };
 
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   return (
-    <motion.div
+<motion.div
+      ref={setNodeRef}
+      style={style}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       whileHover={{ y: -2, boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)" }}
       className={cn(
-        "bg-white border border-gray-200 rounded-12 p-4 transition-all duration-200 hover:border-gray-300 group",
+        "bg-white border border-gray-200 rounded-12 p-4 transition-all duration-200 hover:border-gray-300 group relative",
         task.completed && "opacity-75 bg-gradient-to-r from-gray-50 to-white",
         isOverdue && !task.completed && "border-red-200 bg-gradient-to-r from-red-50 to-white",
+        isDragging && "shadow-lg z-10 rotate-2 scale-105",
         className
       )}
     >
-      <div className="flex items-start space-x-3">
+      {/* Drag Handle */}
+      <div
+        {...attributes}
+        {...listeners}
+        className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing"
+      >
+        <ApperIcon name="GripVertical" size={16} className="text-gray-400 hover:text-gray-600" />
+      </div>
+{/* Task Content */}
+      <div className="ml-6">
+        <div className="flex items-start space-x-3">
         <div className="flex-shrink-0 mt-1">
           <Checkbox
             checked={task.completed}
@@ -116,7 +146,7 @@ const TaskCard = ({
               </Button>
             </div>
           </div>
-        </div>
+</div>
       </div>
     </motion.div>
   );

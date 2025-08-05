@@ -71,7 +71,20 @@ class TaskService {
   async getByPriority(priority) {
     await new Promise(resolve => setTimeout(resolve, 250));
     return this.tasks.filter(t => t.priority === priority);
+return this.tasks.filter(t => t.priority === priority);
+  }
+
+  async reorderTasks(taskIds) {
+    await new Promise(resolve => setTimeout(resolve, 200));
+    
+    // Update task positions based on new order
+    taskIds.forEach((taskId, index) => {
+      const taskIndex = this.tasks.findIndex(t => t.Id === parseInt(taskId));
+      if (taskIndex !== -1) {
+        this.tasks[taskIndex].position = index;
+      }
+    });
+    
+    return [...this.tasks];
   }
 }
-
-export const taskService = new TaskService();

@@ -168,12 +168,32 @@ const TaskManager = () => {
       toast.error("Failed to delete task");
       console.error("Error deleting task:", err);
     }
+}
+  };
+
+  const handleReorderTasks = async (taskIds) => {
+    try {
+      // Update local state immediately for smooth UX
+      const reorderedTasks = taskIds.map(id => 
+        tasks.find(task => task.Id === parseInt(id))
+      ).filter(Boolean);
+      
+      setTasks(reorderedTasks);
+      
+      // Persist changes to service
+      await taskService.reorderTasks(taskIds);
+      toast.success("Tasks reordered successfully");
+    } catch (err) {
+      toast.error("Failed to reorder tasks");
+      console.error("Error reordering tasks:", err);
+      // Reload tasks to revert changes
+      loadTasks();
+    }
   };
 
   const handleCloseModal = () => {
     setIsAddModalOpen(false);
     setEditingTask(null);
-  };
 
   const handleModalSubmit = (taskData) => {
     if (editingTask) {
@@ -204,7 +224,7 @@ const TaskManager = () => {
         onAddTask={() => setIsAddModalOpen(true)}
       />
 
-      {/* Task List */}
+{/* Task List */}
       <div className="p-6">
         <TaskList
           tasks={filteredTasks}
@@ -214,6 +234,7 @@ const TaskManager = () => {
           onToggleComplete={handleToggleComplete}
           onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTask}
+          onReorderTasks={handleReorderTasks}
           onRetry={loadTasks}
         />
       </div>
