@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
-import { useParams, useOutletContext } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useOutletContext, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
-import TaskFilters from "@/components/organisms/TaskFilters";
-import TaskList from "@/components/organisms/TaskList";
-import AddTaskModal from "@/components/organisms/AddTaskModal";
-import ProgressDashboard from "@/components/organisms/ProgressDashboard";
-import Button from "@/components/atoms/Button";
-import ApperIcon from "@/components/ApperIcon";
 import { taskService } from "@/services/api/taskService";
+import ApperIcon from "@/components/ApperIcon";
+import TaskList from "@/components/organisms/TaskList";
+import ProgressDashboard from "@/components/organisms/ProgressDashboard";
+import TaskFilters from "@/components/organisms/TaskFilters";
+import TaskCard from "@/components/organisms/TaskCard";
+import AddTaskModal from "@/components/organisms/AddTaskModal";
+import Button from "@/components/atoms/Button";
 
 const TaskManager = () => {
   const { categoryId, priority, status } = useParams();
@@ -164,11 +165,25 @@ const TaskManager = () => {
       await taskService.delete(taskId);
       setTasks(prev => prev.filter(t => t.Id !== taskId));
       toast.success("Task deleted successfully");
+} catch (err) {
+      toast.error("Failed to delete task");
+      console.error("Error deleting task:", err);
+    }
+};
+
+  const handleDeleteTask = async (taskId) => {
+    if (!window.confirm("Are you sure you want to delete this task?")) {
+      return;
+    }
+
+    try {
+      await taskService.delete(taskId);
+      setTasks(prev => prev.filter(t => t.Id !== taskId));
+      toast.success("Task deleted successfully");
     } catch (err) {
       toast.error("Failed to delete task");
       console.error("Error deleting task:", err);
     }
-}
   };
 
   const handleReorderTasks = async (taskIds) => {
@@ -191,9 +206,10 @@ const TaskManager = () => {
     }
   };
 
-  const handleCloseModal = () => {
+const handleCloseModal = () => {
     setIsAddModalOpen(false);
     setEditingTask(null);
+  };
 
   const handleModalSubmit = (taskData) => {
     if (editingTask) {

@@ -98,10 +98,9 @@ const sensors = useSensors(
                   onDelete={onDeleteTask}
                 />
               </motion.div>
-            ))}
+))}
           </SortableContext>
         </DndContext>
-        ))}
       </AnimatePresence>
     </div>
   );

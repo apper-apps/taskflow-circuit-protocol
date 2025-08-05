@@ -68,10 +68,9 @@ class TaskService {
     return this.tasks.filter(t => t.completed === completed);
   }
 
-  async getByPriority(priority) {
+async getByPriority(priority) {
     await new Promise(resolve => setTimeout(resolve, 250));
     return this.tasks.filter(t => t.priority === priority);
-return this.tasks.filter(t => t.priority === priority);
   }
 
   async reorderTasks(taskIds) {
