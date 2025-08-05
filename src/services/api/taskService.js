@@ -1,5 +1,4 @@
 import tasksData from "@/services/mockData/tasks.json";
-
 class TaskService {
   constructor() {
     this.tasks = [...tasksData];
@@ -66,9 +65,9 @@ class TaskService {
   async getByStatus(completed) {
     await new Promise(resolve => setTimeout(resolve, 250));
     return this.tasks.filter(t => t.completed === completed);
-  }
+}
 
-async getByPriority(priority) {
+  async getByPriority(priority) {
     await new Promise(resolve => setTimeout(resolve, 250));
     return this.tasks.filter(t => t.priority === priority);
   }
@@ -87,3 +86,9 @@ async getByPriority(priority) {
     return [...this.tasks];
   }
 }
+
+// Create and export an instance for immediate use
+export const taskService = new TaskService();
+
+// Also export the class for potential direct instantiation
+export default TaskService;
