@@ -1,14 +1,18 @@
 import { motion } from "framer-motion";
-import { useNavigate, useLocation } from "react-router-dom";
-import { cn } from "@/utils/cn";
-import Button from "@/components/atoms/Button";
+import { useLocation, useNavigate } from "react-router-dom";
+import React from "react";
 import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import { cn } from "@/utils/cn";
 
 const CategorySidebar = ({ 
   categories, 
   activeCategoryId, 
   onCategorySelect,
-  className 
+  className,
+  user,
+  onLogout,
+  isAuthenticated
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -90,7 +94,7 @@ const CategorySidebar = ({
           <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider font-display">
             Categories
           </h2>
-          <div className="space-y-1">
+<div className="space-y-1">
             {categories.map((category) => (
               <Button
                 key={category.Id}
@@ -106,7 +110,7 @@ const CategorySidebar = ({
                   className="w-3 h-3 rounded-full mr-3 flex-shrink-0"
                   style={{ backgroundColor: category.color }}
                 />
-                <span className="truncate">{category.name}</span>
+                <span className="truncate">{category.Name}</span>
                 <span className="ml-auto text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
                   {category.taskCount}
                 </span>
@@ -118,35 +122,37 @@ const CategorySidebar = ({
 
       {/* Status Filters */}
       <div className="space-y-2">
-        <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider font-display">
-          Status
-        </h2>
-        <div className="space-y-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleStatusFilter("active")}
-            className={cn(
-              "w-full justify-start text-left font-body hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100",
-              isActiveStatusRoute("active") && "bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700"
-            )}
-          >
-            <ApperIcon name="Clock" size={16} className="mr-3" />
-            Active Tasks
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleStatusFilter("completed")}
-            className={cn(
-              "w-full justify-start text-left font-body hover:bg-gradient-to-r hover:from-green-50 hover:to-green-100",
-              isActiveStatusRoute("completed") && "bg-gradient-to-r from-green-100 to-green-200 text-green-700"
-            )}
-          >
-            <ApperIcon name="CheckCircle" size={16} className="mr-3" />
-            Completed Tasks
-          </Button>
-        </div>
+        {/* User Info and Logout - Desktop */}
+        {isAuthenticated && user && (
+          <div className="mt-auto p-4 border-t border-gray-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-semibold">
+                    {user.firstName?.[0]}{user.lastName?.[0]}
+                  </span>
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {user.firstName} {user.lastName}
+                  </p>
+                  <p className="text-xs text-gray-500 truncate">
+                    {user.emailAddress}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onLogout}
+                className="text-red-600 hover:text-red-700 p-2"
+                title="Logout"
+              >
+                <ApperIcon name="LogOut" size={16} />
+              </Button>
+            </div>
+          </div>
+)}
       </div>
 
       {/* Priority Filters */}
@@ -196,5 +202,4 @@ const CategorySidebar = ({
     </motion.div>
   );
 };
-
 export default CategorySidebar;

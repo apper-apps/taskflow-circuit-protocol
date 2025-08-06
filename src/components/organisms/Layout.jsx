@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useSelector } from 'react-redux';
+import { AuthContext } from '../../App';
 import CategorySidebar from "@/components/organisms/CategorySidebar";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 import { categoryService } from "@/services/api/categoryService";
-
 const Layout = () => {
   const [categories, setCategories] = useState([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { logout } = useContext(AuthContext);
   useEffect(() => {
     loadCategories();
   }, []);
@@ -33,7 +35,7 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Mobile Header */}
+{/* Mobile Header */}
       <div className="lg:hidden bg-white border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -44,14 +46,31 @@ const Layout = () => {
               TaskFlow
             </h1>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleMobileMenu}
-            className="p-2"
-          >
-            <ApperIcon name="Menu" size={20} />
-          </Button>
+          <div className="flex items-center space-x-2">
+            {isAuthenticated && user && (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600 hidden sm:block">
+                  {user.firstName} {user.lastName}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={logout}
+                  className="text-red-600 hover:text-red-700"
+                >
+                  <ApperIcon name="LogOut" size={16} />
+                </Button>
+              </div>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleMobileMenu}
+              className="p-2"
+            >
+              <ApperIcon name="Menu" size={20} />
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -81,11 +100,14 @@ const Layout = () => {
 
       {/* Desktop Layout */}
       <div className="flex">
-        {/* Desktop Sidebar */}
+{/* Desktop Sidebar */}
         <div className="hidden lg:block">
           <CategorySidebar
             categories={categories}
             className="fixed top-0 left-0 h-screen"
+            user={user}
+            onLogout={logout}
+            isAuthenticated={isAuthenticated}
           />
         </div>
 

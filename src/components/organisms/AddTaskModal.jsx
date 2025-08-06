@@ -164,9 +164,9 @@ const AddTaskModal = ({
                     onChange={(e) => handleInputChange("categoryId", e.target.value)}
                   >
                     <option value="">No Category</option>
-                    {categories?.map((category) => (
+{categories?.map((category) => (
                       <option key={category.Id} value={category.Id.toString()}>
-                        {category.name}
+                        {category.Name}
                       </option>
                     ))}
                   </Select>

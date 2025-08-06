@@ -3,8 +3,7 @@ import { cn } from "@/utils/cn";
 
 const CategoryBadge = ({ category, className }) => {
   if (!category) return null;
-
-  const getColorStyle = (color) => {
+const getColorStyle = (color) => {
     const colorMap = {
       "#5B21B6": "primary",
       "#8B5CF6": "secondary", 
@@ -21,7 +20,7 @@ const CategoryBadge = ({ category, className }) => {
       variant={getColorStyle(category.color)}
       className={cn("text-xs font-medium", className)}
     >
-      {category.name}
+      {category.Name}
     </Badge>
   );
 };

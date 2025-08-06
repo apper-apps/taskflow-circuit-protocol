@@ -27,10 +27,9 @@ const TaskFilters = ({
     { value: "medium", label: "Medium Priority" },
     { value: "low", label: "Low Priority" }
   ];
-
-  const categoryOptions = categories?.map(cat => ({
+const categoryOptions = categories?.map(cat => ({
     value: cat.Id.toString(),
-    label: cat.name
+    label: cat.Name
   })) || [];
 
   return (
