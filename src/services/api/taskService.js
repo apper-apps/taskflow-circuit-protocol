@@ -383,4 +383,3 @@ class TaskService {
 export const taskService = new TaskService();
 // Also export the class for potential direct instantiation
 export default TaskService;
-export default TaskService;
