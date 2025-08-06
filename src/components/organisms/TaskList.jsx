@@ -73,18 +73,18 @@ const TaskList = ({
     />;
   }
 
-  return (
+return (
     <div className={`space-y-4 ${className}`}>
-      <AnimatePresence mode="popLayout">
-<DndContext 
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
+      <DndContext 
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext 
+          items={tasks.map(task => task.Id)}
+          strategy={verticalListSortingStrategy}
         >
-          <SortableContext 
-            items={tasks.map(task => task.Id)}
-            strategy={verticalListSortingStrategy}
-          >
+          <AnimatePresence mode="popLayout">
             {tasks.map((task, index) => (
               <motion.div
                 key={task.Id}
@@ -92,6 +92,7 @@ const TaskList = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ delay: index * 0.05 }}
+                style={{ marginBottom: '1rem' }}
               >
                 <TaskCard
                   task={task}
@@ -101,10 +102,10 @@ const TaskList = ({
                   onDelete={onDeleteTask}
                 />
               </motion.div>
-))}
-          </SortableContext>
-        </DndContext>
-      </AnimatePresence>
+            ))}
+          </AnimatePresence>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 };
